@@ -1,0 +1,33 @@
+.city{
+    width: 799px;
+    height:150px;
+    border:1px solid orange;
+    text-align: center;
+    
+    h1{
+        text-align: center;
+    }
+
+    button {
+        border: none;
+        padding: 10px;
+        float:right;
+        margin-right: 20px;
+        background-color: orange;
+        color: #fff;
+    }
+
+    span{
+        padding: 0 20px;
+    }
+}
+
+.info{
+    text-align: center;
+}
+
+.Chisinau {
+    background-image: url('../../shared/images/chisinau.jpg');
+    background-repeat: no-repeat;
+    background-size: contain;
+}

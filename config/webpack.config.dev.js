@@ -136,7 +136,7 @@ module.exports = {
     // https://github.com/facebook/create-react-app/issues/290
     // `web` extension prefixes have been added for better support
     // for React Native Web.
-    extensions: ['.web.js', '.js', '.json', '.web.jsx', '.jsx'],
+    extensions: ['.mjs', '.web.js', '.js', '.json', '.web.jsx', '.jsx'],
     alias: {
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
@@ -169,8 +169,10 @@ module.exports = {
 
       // First, run the linter.
       // It's important to do this before Babel processes the JS.
+
+      //RULES FOR LINTERS
       {
-        test: /\.(js|jsx)$/,
+        test: /\.(js|mjs|jsx)$/,
         enforce: 'pre',
         use: [
           {
@@ -184,16 +186,8 @@ module.exports = {
         ],
         include: paths.appSrc,
       },
-      {
-        // `mjs` support is still in its infancy in the ecosystem, so we don't
-        // support it.
-        // Modules who define their `browser` or `module` key as `mjs` force
-        // the use of this extension, so we need to tell webpack to fall back
-        // to auto mode (ES Module interop, allows ESM to import CommonJS).
-        test: /\.mjs$/,
-        include: /node_modules/,
-        type: 'javascript/auto',
-      },
+
+      //END OF RULES
       {
         // "oneOf" will traverse all following loaders until one will
         // match the requirements. When no loader matches it will fall
@@ -213,7 +207,7 @@ module.exports = {
           // Process application JS with Babel.
           // The preset includes JSX, Flow, and some ESnext features.
           {
-            test: /\.(js|jsx)$/,
+            test: /\.(js|mjs|jsx)$/,
             include: paths.appSrc,
             loader: require.resolve('babel-loader'),
             options: {
@@ -244,7 +238,7 @@ module.exports = {
           // Process any JS outside of the app with Babel.
           // Unlike the application JS, we only compile the standard ES features.
           {
-            test: /\.js$/,
+            test: /\.(js|mjs)$/,
             exclude: /@babel(?:\/|\\{1,2})runtime/,
             loader: require.resolve('babel-loader'),
             options: {
@@ -299,53 +293,11 @@ module.exports = {
           {
             test: sassRegex,
             exclude: sassModuleRegex,
-            use: getStyleLoaders({ importLoaders: 2 }, 'sass-loader'),
+            use: getStyleLoaders({ importLoaders: 2, modules:true,localIdentName: '[name]__[local]___[hash:base64:5]' }, 'sass-loader'),
           },
-          {
-            test: /\.scss$/,
-            use: [
-              require.resolve('style-loader'),
-              {
-                loader: require.resolve('css-loader'),
-                options: {
-                  importLoaders: 1,
-                  modules: true,
-                  localIdentName: '[name]__[local]___[hash:base64:5]'
-                },
-              },
-              {
-                loader: require.resolve('sass-loader'),
-              },
-
-              {
-                loader: require.resolve('sass-loader'),
-              },
-              {
-                loader: require.resolve('postcss-loader'),
-                options: {
-                  // Necessary for external CSS imports to work
-                  // https://github.com/facebookincubator/create-react-app/issues/2677
-                  ident: 'postcss',
-                  plugins: () => [
-                    require('postcss-flexbugs-fixes'),
-                    autoprefixer({
-                      browsers: [
-                        '>1%',
-                        'last 4 versions',
-                        'Firefox ESR',
-                        'not ie < 9', // React doesn't support IE8 anyway
-                      ],
-                      flexbox: 'no-2009',
-                    }),
-                    require('postcss-modules-values')
-                  ],
-                },
-              },
-            ],
-          }
           // Adds support for CSS Modules, but using SASS
           // using the extension .module.scss or .module.sass
-          ,{
+          {
             test: sassModuleRegex,
             use: getStyleLoaders(
               {
@@ -366,7 +318,7 @@ module.exports = {
             // its runtime that would otherwise be processed through "file" loader.
             // Also exclude `html` and `json` extensions so they get processed
             // by webpacks internal loaders.
-            exclude: [/\.(js|jsx)$/, /\.html$/, /\.json$/],
+            exclude: [/\.(js|mjs|jsx)$/, /\.html$/, /\.json$/],
             loader: require.resolve('file-loader'),
             options: {
               name: 'static/media/[name].[hash:8].[ext]',
