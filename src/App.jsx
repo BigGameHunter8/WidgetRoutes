@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
-import styles from './App.scss';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+// import styles from './App.scss';
 import listofcities from './shared/listofcities';
-import City from './components/City/City';
+import Homepage from './components/Homepage/Homepage';
 import getCitiesData from './shared/getCitiesData';
+import Details from './components/Details/Details';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       cities: listofcities,
-      data: {},
+      data: null,
     };
   }
 
@@ -21,12 +23,15 @@ class App extends Component {
 
   render() {
     const { cities, data } = this.state;
-    return (
-      <div className={styles.app}>
-        <h1>{cities}</h1>
-        {Object.keys(data).map((city, index) => { return <City data={data[city]} key={index} />; })}
-      </div>
-    );
+
+    return data ? (
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/" render={() => { return <Homepage cities={cities} data={data} />; }} />
+          <Route exact path="/details/:cityname" render={(route) => { return <Details cities={cities} data={data} match={route.match} />; }} />
+        </Switch>
+      </BrowserRouter>
+    ) : (<p>Loading</p>);
   }
 }
 

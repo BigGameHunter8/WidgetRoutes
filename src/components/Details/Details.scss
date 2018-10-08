@@ -1,37 +1,22 @@
-.city{
-    width: 799px;
-    height:150px;
-    border:1px solid orange;
-    text-align: center;
-    
+.details{
+    width:500px;
+    height: 600px;
+    background-color: #e9e9e9;
+    margin: 25px auto;
+
     h1{
         text-align: center;
     }
 
-    .button {
-        border: none;
-        padding: 10px;
-        float:right;
-        margin-right: 20px;
-        background-color: orange;
-        color: #fff;
-    }
-
-    span{
-       padding: 0;
-    }
-
-    span:first-child{
-        margin-left: 40px;
+    p{
+        text-align: center;
     }
 }
 
-.info{
-    text-align: center;
-}
-
-.city > .info {
-    padding-left:40px;
+.city{
+    width:800px;
+    height: 250px;
+    margin-left: 60px;
 }
 
 .Chisinau {
@@ -74,19 +59,4 @@
     background-image: url('../../shared/images/pekin.jpg');
     background-repeat: no-repeat;
     background-size: contain;
-}
-
-.button {
-    border: none;
-    padding: 10px;
-    float:right;
-    margin-right: 20px;
-    background-color: orange;
-    color: #fff;
-    text-decoration: none;
-    margin-top: -30px;
-}
-
-.city{
-    margin: 0 auto;
 }

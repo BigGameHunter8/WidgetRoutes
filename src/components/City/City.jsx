@@ -1,17 +1,21 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styles from './City.scss';
-
 
 const City = (props) => {
     const { data } = props;
-    console.log(data);
+    const { city } = data.location;
+    const { date, day, text } = data.forecast.forecast[0];
+
     return (
-        <div className={`${styles.city} ${styles.Chisinau}`}>
-            <h1>{data.location.city}</h1>
-            <span className={styles.info}>Date</span>
-            <span className={styles.info}>Day</span>
-            <span className={styles.info}>Text</span>
-            <button type="submit">Details</button>
+        <div className={`${styles.city} ${styles[props.cityName]}`}>
+            <h1>{city}</h1>
+            <span className={styles.info}>{date}</span>
+            <span className={styles.info}>{day}</span>
+            <span className={styles.info}>{text}</span>
+            <div>
+                <Link to={`/details/${props.cityName}`} className={styles.button}>Details</Link>
+            </div>
         </div>
     );
 };

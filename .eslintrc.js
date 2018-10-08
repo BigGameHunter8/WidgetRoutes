@@ -24,6 +24,7 @@ module.exports = {
         "object-shorthand": 0,
         "object-curly-newline": 0,
         'react/no-array-index-key': 0,
-        " jshint expr": "true"
+        " jshint expr": "true",
+        "react/jsx-one-expression-per-line": 0
     }
 };
